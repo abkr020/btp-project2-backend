@@ -1,0 +1,86 @@
+const express = require('express');
+const { exec } = require('child_process');
+const cors = require('cors');
+const app = express();
+
+app.use(express.json()); // For parsing JSON request body
+app.use(cors()); // Allow Cross-Origin Requests
+
+// Route for predicting wait time
+app.post('/predict', (req, res) => {
+    const { arrivalTime, department, doctorsAvailable } = req.body;
+
+    // Prepare the features array
+    const features = [arrivalTime, department, doctorsAvailable];
+
+    // Execute Python script and pass features as arguments
+    // exec(`python3 predict.py ${features.join(' ')}`, (error, stdout, stderr) => {
+    // exec(`python3 scripts/predict.py ${features.join(' ')}`, (error, stdout, stderr) => {
+    //     exec(`/Users/abhishekkumar/Desktop/btp project - 1/backend/venv/bin/python3 scripts/predict.py ${features.join(' ')}`, (error, stdout, stderr) => {
+
+
+    //     if (error) {
+    //         console.error(`Error executing Python script: ${error.message}`);
+    //         return res.status(500).json({ error: 'Error executing prediction model' });
+    //     }
+    //     if (stderr) {
+    //         console.error(`stderr: ${stderr}`);
+    //         return res.status(500).json({ error: stderr });
+    //     }
+
+    //     // Send the predicted wait time back to the client
+    //     res.json({ wait_time: stdout.trim() });
+    // });
+    // const command = `"${__dirname}/venv/bin/python3" "${__dirname}/scripts/predict.py" ${arrivalTime} ${feature1} ${feature2}`;
+    // const pythonPath = "/path/to/your/new_folder_name/venv/bin/python3";
+//     const pythonPath = "/Users/abhishekkumar/Desktop/btp_project _1/venv/bin/python3";
+
+
+//         // /Users/abhishekkumar/Desktop/btp\ project\ -\ 1/backend/venv/bin/python3 predict.py 5.0 1 2
+//     // exec(`"/Users/abhishekkumar/Desktop/btp project - 1/backend/venv/bin/python3" scripts/predict.py ${features.join(' ')}`, (error, stdout, stderr) => {
+//         exec(pythonPath, (error, stdout, stderr) => {
+
+//         if (error) {
+//             console.error(`Error executing Python script: ${error.message}`);
+//             return res.status(500).json({ error: 'Error executing prediction model' });
+//         }
+//         if (stderr) {
+//             console.error(`stderr: ${stderr}`);
+//             return res.status(500).json({ error: stderr });
+//         }
+    
+//         // Send the predicted wait time back to the client
+//         res.json({ wait_time: stdout.trim() });
+//     });
+});
+
+
+
+const pythonPath = "/Users/abhishekkumar/Desktop/btp_project\\ _1/venv/bin/python3";
+const scriptPath = "scripts/predict.py";
+
+// Assuming features are provided and joined correctly
+// const features = [5.0, 1, 2]; // Example features array
+
+// Properly format the full command
+const command = `${pythonPath} ${scriptPath} ${features.join(' ')}`;
+
+exec(command, (error, stdout, stderr) => {
+    if (error) {
+        console.error(`Error executing Python script: ${error.message}`);
+        return res.status(500).json({ error: 'Error executing prediction model' });
+    }
+    if (stderr) {
+        console.error(`stderr: ${stderr}`);
+        return res.status(500).json({ error: stderr });
+    }
+
+    // Send the predicted wait time back to the client
+    res.json({ wait_time: stdout.trim() });
+});
+
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
