@@ -34,13 +34,16 @@
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
+import os
 
 import sys
 import joblib
 import numpy as np
 
 # Load the model from the specified path
-model_path = '/Users/abhishekkumar/Desktop/btp_project2/backend/model/wait_time_predictor.pkl'
+model_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'wait_time_predictor.pkl') #for hosting on render
+
+# model_path = '/Users/abhishekkumar/Desktop/btp_project2/backend/model/wait_time_predictor.pkl' #for local host
 model = joblib.load(model_path)
 
 # Check if the required number of arguments is provided
