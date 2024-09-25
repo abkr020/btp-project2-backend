@@ -28,7 +28,9 @@ app.post('/predict', (req, res) => {
     const features = [arrivalTime, department, doctorsAvailable];
 
     // Properly format the full command
-    const command = `${pythonPath} ${scriptPath} ${features.join(' ')}`;
+    // const command = `${pythonPath} ${scriptPath} ${features.join(' ')}`; // for local host
+    const command = `python3 ${scriptPath} ${features.join(' ')}`; //for hosting on render
+
 
     // Log the command for debugging
     console.log(`Executing command: ${command}`);
