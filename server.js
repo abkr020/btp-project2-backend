@@ -10,7 +10,10 @@ app.use(cors()); // Allow Cross-Origin Requests
 // Path to Python and script
 const pythonPath = "/Users/abhishekkumar/Desktop/btp_project2/venv/bin/python3";
 const scriptPath = path.join(__dirname, 'scripts', 'predict.py'); // Use path.join for safety
-
+// for testing 
+app.get('/test', (req, res) => {
+    res.send('Hello World!')
+  })
 // Route for predicting wait time
 app.post('/predict', (req, res) => {
     // const { arrivalTime, department, doctorsAvailable } = req.body;
