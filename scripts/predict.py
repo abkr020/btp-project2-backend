@@ -42,8 +42,8 @@
 # import os
 
 # import sys
-# import joblib
 # import numpy as np
+# import joblib
 
 # # Load the model from the specified path
 # model_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'wait_time_predictor.pkl') #for hosting on render
@@ -95,22 +95,24 @@ model_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'final_model
 model = joblib.load(model_path)
 
 # Check the correct number of arguments
-if len(sys.argv) != 8:
+if len(sys.argv) != 10:
     print("Error: Expected 7 arguments: <consultation_revenue> <doctor_type_floating> <doctor_type_locum> <financial_class_hmo> <financial_class_insurance> <financial_class_medicare> <financial_class_private>")
     sys.exit(1)
 
 try:
     # Parse input arguments
     consultation_revenue = float(sys.argv[1])
-    doctor_type_floating = bool(int(sys.argv[2]))
-    doctor_type_locum = bool(int(sys.argv[3]))
-    financial_class_hmo = bool(int(sys.argv[4]))
-    financial_class_insurance = bool(int(sys.argv[5]))
-    financial_class_medicare = bool(int(sys.argv[6]))
-    financial_class_private = bool(int(sys.argv[7]))
+    CT_hour = float(sys.argv[2])
+    ET_hour = float(sys.argv[3])
+    doctor_type_floating = bool(int(sys.argv[4]))
+    doctor_type_locum = bool(int(sys.argv[5]))
+    financial_class_hmo = bool(int(sys.argv[6]))
+    financial_class_insurance = bool(int(sys.argv[7]))
+    financial_class_medicare = bool(int(sys.argv[8]))
+    financial_class_private = bool(int(sys.argv[9]))
 
     # Feature array (excluding WT)
-    features_array = np.array([[consultation_revenue, doctor_type_floating, doctor_type_locum,
+    features_array = np.array([[consultation_revenue, CT_hour, ET_hour, doctor_type_floating, doctor_type_locum,
                                 financial_class_hmo, financial_class_insurance, financial_class_medicare,
                                 financial_class_private]])
 except ValueError as e:
