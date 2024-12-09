@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/abhishekkumar/Desktop/btp project - 1/backend/venv/bin/python3.12" "$0" "$@"
-' '''
+#!/Users/abhishekkumar/Desktop/btp_project2/backend/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
