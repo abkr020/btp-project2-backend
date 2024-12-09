@@ -107,8 +107,8 @@ app.post('/predict', (req, res) => {
     // Build the feature array
     const features = [
         consultationRevenue,
-        CT_hour,
         ET_hour,
+        CT_hour,
         doctorTypeFloating,
         doctorTypeLocum,
         financialClassHMO,
